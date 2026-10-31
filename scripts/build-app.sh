@@ -19,6 +19,8 @@ BIN="$(swift build -c "$CONFIG" --arch arm64 --show-bin-path)"
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources" "$APP/Contents/Helpers"
 cp "$BIN/DragConvert" "$APP/Contents/MacOS/DragConvert"
+# Hata ayıklama sembolleri derleme klasörünün yolunu (kullanıcı adı dahil) taşır; dağıtılan uygulamada gereksiz.
+[[ "$CONFIG" == release ]] && strip -S -x "$APP/Contents/MacOS/DragConvert"
 
 # SwiftPM kaynak paketleri (ör. Formats.json geldiğinde) Resources altına.
 for bundle in "$BIN"/*.bundle(N); do

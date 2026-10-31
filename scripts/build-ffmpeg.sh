@@ -1,7 +1,7 @@
 #!/bin/zsh
 # FFmpeg'i ve kullandığı codec kütüphanelerini kaynaktan derler (Homebrew yok).
 #
-#   scripts/build-ffmpeg.sh          → Vendor/ffmpeg/bin/{ffmpeg,ffprobe,libav*.dylib}
+#   scripts/build-ffmpeg.sh          → Vendor/ffmpeg/bin/{ffmpeg,ffprobe,libav*.dylib} (derleme /tmp/dragconvert-ffmpeg içinde)
 #   CLEAN=1 scripts/build-ffmpeg.sh  → önce derleme klasörlerini siler (indirilenler kalır)
 #
 # Kişisel kullanım: dağıtılmadığı için lisans sınırlaması yok, ama GPL'e de gerek yok (x264 yerine VideoToolbox).
@@ -14,9 +14,13 @@ set -euo pipefail
 ROOT=${0:A:h:h}
 VENDOR="$ROOT/Vendor"
 SRC="$VENDOR/src"          # indirilen arşivler
-BUILD="$VENDOR/build"      # açılan kaynaklar
-DEPS="$VENDOR/deps"        # statik codec kütüphaneleri + pkgconf
-OUT="$VENDOR/ffmpeg"       # bin/ffmpeg, bin/ffprobe
+# ffmpeg configure satırını (yolları dahil) ikili dosyalara gömer ve `ffmpeg -version` bunu gösterir. Dağıtılan
+# dosyada kullanıcı adı/klasör yolu olmasın diye derleme kişisel olmayan sabit bir yolda yapılır, sonuç kopyalanır.
+WORK="${DRAGCONVERT_BUILD_DIR:-/tmp/dragconvert-ffmpeg}"
+BUILD="$WORK/build"        # açılan kaynaklar
+DEPS="$WORK/deps"          # statik codec kütüphaneleri + pkgconf
+OUT="$WORK/ffmpeg"         # bin/ffmpeg, bin/ffprobe, libav*.dylib
+FINAL="$VENDOR/ffmpeg"
 SUMS="$ROOT/scripts/ffmpeg-sources.sha256"
 JOBS=$(sysctl -n hw.ncpu)
 
@@ -74,7 +78,7 @@ autotools() {  # autotools <arşiv> <klasör> [configure argümanları...]
       && make -j"$JOBS" >/dev/null && make install >/dev/null )
 }
 
-[[ -n "${CLEAN:-}" ]] && rm -rf "$BUILD" "$DEPS" "$OUT"
+[[ -n "${CLEAN:-}" ]] && rm -rf "$WORK"
 mkdir -p "$SRC" "$BUILD" "$DEPS" "$OUT"
 touch "$SUMS"
 for name in ${(k)URLS}; do fetch "$name"; done
@@ -145,6 +149,7 @@ rm -rf "$OUT/include" "$OUT/lib" "$OUT/share" "$OUT/bin/pkgconfig"
 strip "$OUT/bin/ffmpeg" "$OUT/bin/ffprobe"
 for lib in "$OUT"/bin/*.dylib(N); do [[ -L "$lib" ]] || strip -x "$lib"; done
 
+rm -rf "$FINAL" && mkdir -p "$FINAL" && cp -R "$OUT/bin" "$FINAL/"
 step "Hazır"
-ls -lh "$OUT/bin"
-otool -L "$OUT/bin/ffmpeg" | tail -n +2
+ls -lh "$FINAL/bin"
+otool -L "$FINAL/bin/ffmpeg" | tail -n +2

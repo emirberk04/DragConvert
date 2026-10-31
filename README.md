@@ -104,22 +104,39 @@ needed), converts it and saves the result to Downloads.
 
 ## Install
 
-There is no signed release yet, so DragConvert is built from source. You need an Apple silicon Mac with
-macOS 14 or later and Xcode (or the Xcode command line tools).
+Requires an Apple silicon Mac with macOS 14 (Sonoma) or later.
+
+### Homebrew
+
+```bash
+brew install --cask emirberk04/tap/dragconvert
+```
+
+### Download
+
+Get **DragConvert-1.0.0.dmg** from the [latest release](https://github.com/emirberk04/DragConvert/releases/latest),
+open it and drag DragConvert to Applications.
+
+DragConvert is not notarized by Apple yet, so the first launch is blocked. Open it once with
+**System Settings › Privacy & Security › Open Anyway**, or run:
+
+```bash
+xattr -dr com.apple.quarantine /Applications/DragConvert.app
+```
+
+The Homebrew cask does this for you.
+
+### Build from source
 
 ```bash
 git clone https://github.com/emirberk04/DragConvert.git
 cd DragConvert
-
-# One time, about 5 minutes: builds FFmpeg and its codecs from their official sources.
-scripts/build-ffmpeg.sh
-
-# Builds DragConvert.app, installs it to ~/Applications and opens it.
-scripts/build-app.sh --install
+scripts/build-ffmpeg.sh          # one time, about 5 minutes: FFmpeg and codecs from official sources
+scripts/build-app.sh --install   # builds DragConvert.app into ~/Applications and opens it
 ```
 
-DragConvert lives in the menu bar. Without FFmpeg it still handles images, PDFs and documents; video and audio
-targets simply do not appear.
+Without FFmpeg, DragConvert still handles images, PDFs and documents; video and audio targets simply do not
+appear. `scripts/make-dmg.sh` builds the release disk image.
 
 ### Permissions
 
@@ -183,7 +200,7 @@ otherwise. Some code comments are still in Turkish; translations are welcome.
 
 ## Roadmap
 
-- [ ] Signed and notarized release (download instead of building)
+- [ ] Notarized release (no Gatekeeper prompt)
 - [ ] Intel build
 - [ ] More formats: HEIF sequences, EPUB, subtitles
 - [ ] Finder Quick Actions for keyboard-only use

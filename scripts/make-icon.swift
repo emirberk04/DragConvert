@@ -1,4 +1,4 @@
-// Halka'nın uygulama ikonunu çizer: 1024 px PNG.
+// DragConvert'nın uygulama ikonunu çizer: 1024 px PNG.
 //   swift scripts/make-icon.swift <çıktı.png>
 // build-app.sh bundan .icns üretir (sips + iconutil). Tasarım: koyu çivit zemin, ortada nokta, etrafında
 // boşluklu altı dilimlik halka; biri vurgulu (seçilen hedef).

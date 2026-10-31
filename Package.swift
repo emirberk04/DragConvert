@@ -2,23 +2,23 @@
 import PackageDescription
 
 let package = Package(
-    name: "Halka",
+    name: "DragConvert",
     platforms: [.macOS(.v14)],
     products: [
-        .executable(name: "Halka", targets: ["HalkaApp"]),
+        .executable(name: "DragConvert", targets: ["DragConvertApp"]),
     ],
     targets: [
         // Saf mantık: format kayıt defteri, iş planlama, motorlar. AppKit yok.
-        .target(name: "HalkaCore"),
+        .target(name: "DragConvertCore"),
         // Sürükleme algılama; halka geometrisi ve tetik durum makinesi saf Swift.
-        .target(name: "HalkaDrag", dependencies: ["HalkaCore"]),
+        .target(name: "DragConvertDrag", dependencies: ["DragConvertCore"]),
         // Pencereler ve görünümler (AppKit + SwiftUI).
-        .target(name: "HalkaUI", dependencies: ["HalkaCore", "HalkaDrag"]),
+        .target(name: "DragConvertUI", dependencies: ["DragConvertCore", "DragConvertDrag"]),
         // Giriş noktası, menü çubuğu.
-        .executableTarget(name: "HalkaApp", dependencies: ["HalkaCore", "HalkaDrag", "HalkaUI"]),
-        .testTarget(name: "HalkaCoreTests", dependencies: ["HalkaCore"]),
-        .testTarget(name: "HalkaDragTests", dependencies: ["HalkaDrag"]),
+        .executableTarget(name: "DragConvertApp", dependencies: ["DragConvertCore", "DragConvertDrag", "DragConvertUI"]),
+        .testTarget(name: "DragConvertCoreTests", dependencies: ["DragConvertCore"]),
+        .testTarget(name: "DragConvertDragTests", dependencies: ["DragConvertDrag"]),
         // README images: RENDER_SCREENSHOTS=1 swift test --filter Screenshots (skipped otherwise).
-        .testTarget(name: "HalkaUITests", dependencies: ["HalkaUI", "HalkaCore", "HalkaDrag"]),
+        .testTarget(name: "DragConvertUITests", dependencies: ["DragConvertUI", "DragConvertCore", "DragConvertDrag"]),
     ]
 )

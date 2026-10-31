@@ -1,9 +1,9 @@
 # Third-party software
 
-Halka's own source code is MIT licensed (see [LICENSE](LICENSE)). This repository contains **no** third-party
+DragConvert's own source code is MIT licensed (see [LICENSE](LICENSE)). This repository contains **no** third-party
 source code or binaries. `scripts/build-ffmpeg.sh` downloads the projects below from their official release
 locations, verifies their SHA-256 checksums against [`scripts/ffmpeg-sources.sha256`](scripts/ffmpeg-sources.sha256)
-and builds them locally. If you build Halka.app and redistribute it, the following licences apply to the
+and builds them locally. If you build DragConvert.app and redistribute it, the following licences apply to the
 bundled `Contents/Helpers` files.
 
 | Component | Version | Licence | Source |
@@ -25,12 +25,12 @@ bundled `Contents/Helpers` files.
 
 ## System frameworks
 
-Halka uses Apple frameworks that ship with macOS (AppKit, SwiftUI, ImageIO, Core Graphics, Core Image, PDFKit,
+DragConvert uses Apple frameworks that ship with macOS (AppKit, SwiftUI, ImageIO, Core Graphics, Core Image, PDFKit,
 AVFoundation, VideoToolbox, AudioToolbox, Vision, ServiceManagement, UserNotifications). H.264, HEVC and AAC
 encoding is done by Apple's VideoToolbox and AudioToolbox, not by FFmpeg.
 
 ## Trademarks
 
-Microsoft Word, Excel and PowerPoint are trademarks of Microsoft Corporation. Halka only automates copies of
+Microsoft Word, Excel and PowerPoint are trademarks of Microsoft Corporation. DragConvert only automates copies of
 these apps that the user has installed, through their public AppleScript interfaces; it contains no Microsoft
 code. macOS, Finder and AirDrop are trademarks of Apple Inc.

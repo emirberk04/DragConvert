@@ -1,8 +1,8 @@
 #!/bin/zsh
-# Halka.app'i derler, paketler ve ad-hoc imzalar.
+# DragConvert.app'i derler, paketler ve ad-hoc imzalar.
 #
-#   scripts/build-app.sh            → build/Halka.app
-#   scripts/build-app.sh --install  → ayrıca ~/Applications/Halka.app (çalışan kopya kapatılıp yenisi açılır)
+#   scripts/build-app.sh            → build/DragConvert.app
+#   scripts/build-app.sh --install  → ayrıca ~/Applications/DragConvert.app (çalışan kopya kapatılıp yenisi açılır)
 #   CONFIG=debug scripts/build-app.sh
 set -euo pipefail
 
@@ -10,7 +10,7 @@ ROOT=${0:A:h:h}
 CONFIG=${CONFIG:-release}
 VERSION=1.0.0
 BUILD_NUMBER=$(date +%Y%m%d%H%M)
-APP="$ROOT/build/Halka.app"
+APP="$ROOT/build/DragConvert.app"
 
 cd "$ROOT"
 swift build -c "$CONFIG" --arch arm64
@@ -18,7 +18,7 @@ BIN="$(swift build -c "$CONFIG" --arch arm64 --show-bin-path)"
 
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources" "$APP/Contents/Helpers"
-cp "$BIN/Halka" "$APP/Contents/MacOS/Halka"
+cp "$BIN/DragConvert" "$APP/Contents/MacOS/DragConvert"
 
 # SwiftPM kaynak paketleri (ör. Formats.json geldiğinde) Resources altına.
 for bundle in "$BIN"/*.bundle(N); do
@@ -50,11 +50,11 @@ cat > "$APP/Contents/Info.plist" <<PLIST
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-  <key>CFBundleExecutable</key><string>Halka</string>
-  <key>CFBundleIdentifier</key><string>io.github.emirberk04.Halka</string>
-  <key>CFBundleName</key><string>Halka</string>
+  <key>CFBundleExecutable</key><string>DragConvert</string>
+  <key>CFBundleIdentifier</key><string>io.github.emirberk04.DragConvert</string>
+  <key>CFBundleName</key><string>DragConvert</string>
   <key>CFBundleIconFile</key><string>AppIcon</string>
-  <key>CFBundleDisplayName</key><string>Halka</string>
+  <key>CFBundleDisplayName</key><string>DragConvert</string>
   <key>CFBundlePackageType</key><string>APPL</string>
   <key>CFBundleShortVersionString</key><string>$VERSION</string>
   <key>CFBundleVersion</key><string>$BUILD_NUMBER</string>
@@ -64,7 +64,7 @@ cat > "$APP/Contents/Info.plist" <<PLIST
   <key>LSMinimumSystemVersion</key><string>14.0</string>
   <key>LSUIElement</key><true/>
   <key>NSHighResolutionCapable</key><true/>
-  <key>NSAppleEventsUsageDescription</key><string>Halka asks Word, PowerPoint and Excel to save documents as PDF and other Office formats.</string>
+  <key>NSAppleEventsUsageDescription</key><string>DragConvert asks Word, PowerPoint and Excel to save documents as PDF and other Office formats.</string>
   <key>NSHumanReadableCopyright</key><string>MIT License</string>
 </dict>
 </plist>
@@ -79,9 +79,9 @@ codesign --verify --strict "$APP"
 echo "Hazır: $APP"
 
 if [[ "${1:-}" == "--install" ]]; then
-  DEST="$HOME/Applications/Halka.app"
+  DEST="$HOME/Applications/DragConvert.app"
   mkdir -p "$HOME/Applications"
-  pkill -x Halka 2>/dev/null || true
+  pkill -x DragConvert 2>/dev/null || true
   rm -rf "$DEST"
   cp -R "$APP" "$DEST"
   open "$DEST"

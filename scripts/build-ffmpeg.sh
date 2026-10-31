@@ -113,7 +113,7 @@ if [[ ! -f "$DEPS/lib/libvpx.a" ]]; then
       --disable-unit-tests >/dev/null && make -j"$JOBS" >/dev/null && make install >/dev/null )
 fi
 
-# Boyut için sadece Halka'nın kullandıkları (bkz. FFmpegArguments, MediaTools). Her girdi okunabilsin diye bütün
+# Boyut için sadece DragConvert'in kullandıkları (bkz. FFmpegArguments, MediaTools). Her girdi okunabilsin diye bütün
 # çözücüler ve demuxer'lar açık; kodlayıcı, muxer ve filtreler seçili. mpeg4 kodlayıcısı ile testsrc/sine
 # filtreleri testlerin örnek dosyaları için. Yeni bir hedef eklenince buraya da eklenmeli.
 ENCODERS=png,mjpeg,h264_videotoolbox,hevc_videotoolbox,aac_at,aac,libmp3lame,libopus,libvpx_vp9,libwebp,gif,flac,pcm_s16le,pcm_s16be,mpeg4

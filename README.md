@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="docs/images/icon.png" width="128" height="128" alt="Halka icon">
+<img src="docs/images/icon.png" width="128" height="128" alt="DragConvert icon">
 
-# Halka
+# DragConvert
 
 **Drag a file. Hold a key. Drop it on the ring.**
 
@@ -15,15 +15,15 @@ A tiny, native macOS menu-bar utility. Everything runs on your Mac.
 ![Offline](https://img.shields.io/badge/network-none-2ea44f)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-<img src="docs/images/hero.jpg" alt="Halka's three rings: Convert, Tools and Actions" width="100%">
+<img src="docs/images/hero.jpg" alt="DragConvert's three rings: Convert, Tools and Actions" width="100%">
 
 </div>
 
-*Halka* is Turkish for *ring*. Pick up any file in Finder (or a photo in the Photos app), hold
-<kbd>⇧</kbd>, <kbd>⌥</kbd> or <kbd>⌃</kbd>, and a ring opens around your cursor with only the things that file
-can actually become or do. Release on a slice and the result lands right next to the original.
+Pick up any file in Finder (or a photo in the Photos app), hold <kbd>⇧</kbd>, <kbd>⌥</kbd> or <kbd>⌃</kbd>,
+and a ring opens around your cursor with only the things that file can actually become or do. Release on a
+slice and the result lands right next to the original.
 
-## Why Halka
+## Why DragConvert
 
 - **One gesture for everything.** Images, video, audio, PDFs, Word, PowerPoint and Excel files all work the
   same way: drag, hold, drop.
@@ -99,31 +99,31 @@ Things to do *with* a file rather than *to* it, for any file type:
 
 ### Works with the Photos app
 
-Drag straight out of Photos: Halka asks Photos for the original file (downloading it from iCloud if
+Drag straight out of Photos: DragConvert asks Photos for the original file (downloading it from iCloud if
 needed), converts it and saves the result to Downloads.
 
 ## Install
 
-There is no signed release yet, so Halka is built from source. You need an Apple silicon Mac with
+There is no signed release yet, so DragConvert is built from source. You need an Apple silicon Mac with
 macOS 14 or later and Xcode (or the Xcode command line tools).
 
 ```bash
-git clone https://github.com/emirberk04/halka.git
-cd halka
+git clone https://github.com/emirberk04/DragConvert.git
+cd DragConvert
 
 # One time, about 5 minutes: builds FFmpeg and its codecs from their official sources.
 scripts/build-ffmpeg.sh
 
-# Builds Halka.app, installs it to ~/Applications and opens it.
+# Builds DragConvert.app, installs it to ~/Applications and opens it.
 scripts/build-app.sh --install
 ```
 
-Halka lives in the menu bar. Without FFmpeg it still handles images, PDFs and documents; video and audio
+DragConvert lives in the menu bar. Without FFmpeg it still handles images, PDFs and documents; video and audio
 targets simply do not appear.
 
 ### Permissions
 
-Halka needs no special permission to work. macOS asks only for things you use:
+DragConvert needs no special permission to work. macOS asks only for things you use:
 
 - **Automation** for Word, PowerPoint or Excel, the first time a document is converted with them
 - **Notifications**, if you turn on "Notify when a job finishes"
@@ -156,7 +156,7 @@ The interface is in English, and in Turkish when macOS is set to Turkish.
   timer only while the button is held, which watches the system drag pasteboard and the modifier keys. When
   the mouse is up, nothing runs.
 - **The ring** is a non-activating panel under the cursor that becomes the drop target, so the source app
-  never sees the drop. Apps like Photos offer *file promises* instead of paths; Halka receives the real file.
+  never sees the drop. Apps like Photos offer *file promises* instead of paths; DragConvert receives the real file.
 - **Engines:** ImageIO and Core Graphics for images and PDFs; PDFKit for PDF tools; Vision for OCR and
   background removal; a bundled FFmpeg 9 (shared libraries, no network, no GPL code) for video and audio;
   macOS `textutil` for text documents; AppleScript automation of Microsoft Office for Office formats.
@@ -164,10 +164,10 @@ The interface is in English, and in Turkish when macOS is set to Turkish.
 
 ```
 Sources/
-  HalkaCore   formats, conversions and tools, no AppKit (unit-tested)
-  HalkaDrag   drag detection, trigger state machine, ring geometry
-  HalkaUI     ring panel, tool panels, Shelf, Settings
-  HalkaApp    menu bar and glue
+  DragConvertCore   formats, conversions and tools, no AppKit (unit-tested)
+  DragConvertDrag   drag detection, trigger state machine, ring geometry
+  DragConvertUI     ring panel, tool panels, Shelf, Settings
+  DragConvertApp    menu bar and glue
 ```
 
 ## Development
@@ -188,9 +188,9 @@ otherwise. Some code comments are still in Turkish; translations are welcome.
 - [ ] More formats: HEIF sequences, EPUB, subtitles
 - [ ] Finder Quick Actions for keyboard-only use
 
-Ideas and bug reports are welcome in [Issues](https://github.com/emirberk04/halka/issues).
+Ideas and bug reports are welcome in [Issues](https://github.com/emirberk04/DragConvert/issues).
 
 ## License
 
-Halka is released under the [MIT License](LICENSE). It builds on FFmpeg, LAME, libvpx, libwebp and Opus;
+DragConvert is released under the [MIT License](LICENSE). It builds on FFmpeg, LAME, libvpx, libwebp and Opus;
 see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
